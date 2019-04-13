@@ -1,0 +1,62 @@
+.bord {
+    border: 5px;
+}
+.img-circle {
+    width: 30px
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+ }
+
+#group-selector {
+    margin-top: 30px;
+}
+#group-selector select {
+    margin: 0;
+    width: 85%;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    height: 30px;
+    line-height: 30px;
+    color: #555555;
+}
+
+.pager .previous>a, .pager .next>a {
+    float: none;
+    border: none;
+}
+
+#visits th {
+    text-align: center;
+}
+.checkbox input[type=checkbox]{
+    position: static;
+    margin-left: 40%;
+}
+
+:checked{
+   box-shadow: inset 0 0 2px 2px #1885e8e0;
+}
+
+.form-group {
+    float: none;
+}
+
+#footer {
+    border-top: 1px solid red;
+    padding-top: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
+
+.foto {
+    display: flex;
+    justify-content: center;
+}
+
+.clear {
+	clear: both;
+	height: 63px;
+}
