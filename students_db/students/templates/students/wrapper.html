@@ -50,9 +50,9 @@
     <div class="row" id="sub-header">
         <div class="bord col-lg-12">
             <ul class="nav nav-tabs">
-                {% block SubHeader %}
-
-                {% endblock %}
+                <li role="presentation" {% if request.path == '/' %} class="active" {% endif %}><a href="{% url 'home' %}">Студенти</a></li>
+                <li role="presentation" {% if request.path == '/journal/' %} class="active" {% endif %}><a href="{% url 'journal' %}">Відвідування</a></li>
+                <li role="presentation" {% if request.path == '/groups/' %} class="active" {% endif %}><a href="{% url 'groups' %}">Групи</a></li>
             </ul>
         </div>
     </div>

@@ -35,7 +35,8 @@ name='groups_edit'),
     url(r'^groups/(?P<gid>.+)/delete/$', views.groups_delete,
 name='groups_delete'),
 
-    #
+    # Visits urls
+    url(r'^journal/$', views.journal_main_view, name='journal'),
 
     url(r'^admin/', admin.site.urls),
 ]
