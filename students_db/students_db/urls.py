@@ -30,10 +30,12 @@ name='students_delete'),
     # Groups urls
     url(r'^groups/$', views.groups_list, name='groups'),
     url(r'^groups/add/$', views.groups_add, name='groups_add'),
-    url(r'^groups/(?P<gid>\d+)/edit/$', views.groups_edit,
+    url(r'^groups/(?P<gid>.+)/edit/$', views.groups_edit,
 name='groups_edit'),
-    url(r'’^groups/(?P<gid>\d+)/delete/$', views.groups_delete,
+    url(r'^groups/(?P<gid>.+)/delete/$', views.groups_delete,
 name='groups_delete'),
+
+    #
 
     url(r'^admin/', admin.site.urls),
 ]
