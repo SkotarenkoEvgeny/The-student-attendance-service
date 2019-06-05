@@ -25,7 +25,7 @@ from django.conf import settings
 urlpatterns = [
 
     #Students urls
-    url(r'^$', views.students_list, name="home"),
+    url(r'^$', views.students_list, name='home'),
     url(r'^students/add/$', views.students_add, name='students_add'),
     url(r'^students/(?P<sid>\d+)/edit/$', views.students_edit,
 name='students_edit'),

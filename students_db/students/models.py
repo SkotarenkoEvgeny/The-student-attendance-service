@@ -38,8 +38,7 @@ class Student(models.Model):
         verbose_name=True,
         null=True)
 
-    ticket = models.CharField(
-        max_length=256,
+    ticket = models.IntegerField(
         blank=False,
         verbose_name=u"Білет"
     )
