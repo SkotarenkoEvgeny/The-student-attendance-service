@@ -27,18 +27,20 @@
                 {% endif %}
             </a>
         </th>
-        <th><a href="{% url 'home' %}?order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
-            Ім'я
-            {% if order_by == 'first_name' and reverse != '1' %}&uarr;
-            {% elif order_by == 'first_name' and reverse == '1' %}&darr;
-            {% endif %}
+        <th>
+            <a href="{% url 'home' %}?order_by=first_name{% if order_by == 'first_name' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                Ім'я
+                {% if order_by == 'first_name' and reverse != '1' %}&uarr;
+                {% elif order_by == 'first_name' and reverse == '1' %}&darr;
+                {% endif %}
             </a>
         </th>
-        <th><a href="{% url 'home' %}?order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1{% endif %}">
-            № Білету
-            {% if order_by == 'ticket' and reverse != '1' %}&uarr;
-            {% elif order_by == 'ticket' and reverse == '1' %}&darr;
-            {% endif %}
+        <th>
+            <a href="{% url 'home' %}?order_by=ticket{% if order_by == 'ticket' and reverse != '1' %}&amp;reverse=1{% endif %}">
+                № Білету
+                {% if order_by == 'ticket' and reverse != '1' %}&uarr;
+                {% elif order_by == 'ticket' and reverse == '1' %}&darr;
+                {% endif %}
             </a>
         </th>
         <th>Дії</th>
@@ -91,5 +93,24 @@
 
     </tbody>
 </table>
+
+<!--Pagination-->
+{% if students.has_other_pages %}
+    {% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+    <nav>
+        <ul class="pagination">
+            <li><a href="{% url 'home' %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a></li>
+            {% for p in students.paginator.page_range %}
+                <li {% if students.number == p %}class="active"z{% endif %}>
+                <a href="{% url 'home' %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+            <li><a href="{% url 'home' %}?page={{ students.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a></li>
+        </ul>
+    </nav>
+    {% endwith %}
+    {% endif %}
+<br/>
+<!--End page selector-->
 {% endblock %}
 <!-- End Students Listing -->
