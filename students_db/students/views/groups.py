@@ -13,8 +13,22 @@ def groups_list(request):
     order_by = request.GET.get('order_by', '')
     if order_by in ('title', 'leader'):
         group_list = group_list.order_by(order_by)
-        if request.GET.get('reverse', '') == '1':
+        if request.GET.get('reverse', '') == 1:
             group_list = group_list.reverse()
+
+    # paginate students_list
+
+    paginator = Paginator(group_list, 2)
+    page = request.GET.get('page')
+    try:
+        group_list = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        group_list = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver
+        # last page of results.
+        group_list = paginator.page(paginator.num_pages)
 
     return render(request, 'students/groups.html', {'groups': group_list})
 
