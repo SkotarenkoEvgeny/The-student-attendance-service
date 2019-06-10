@@ -7,15 +7,16 @@ from students.models.group import Group
 # Views for Group
 
 def groups_list(request):
-    groups = (
-        {'id': 1,
-         'number': u'МтМ-21',
-         'star': u'Ячменев Олег'},
-        {'id': 2,
-         'number': u'МтМ-22',
-         'star': u'Подоба Віталій'}
-    )
-    return render(request, 'students/groups.html', {'groups': groups})
+
+    group_list = Group.objects.all()
+
+    order_by = request.GET.get('order_by', '')
+    if order_by in ('title', 'leader'):
+        group_list = group_list.order_by(order_by)
+        if request.GET.get('reverse', '') == '1':
+            group_list = group_list.reverse()
+
+    return render(request, 'students/groups.html', {'groups': group_list})
 
 
 def groups_add(requests):
