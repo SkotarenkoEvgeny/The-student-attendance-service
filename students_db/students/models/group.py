@@ -11,7 +11,7 @@ class Group(models.Model):
     title = models.CharField(
         max_length=256,
         blank=False,
-        verbose_name=u"Назва"
+        verbose_name=u"Група"
     )
 
     leader = models.OneToOneField(

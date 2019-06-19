@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from students.views import students, groups, journals
+from students.views import students, groups, journals, exams
 from django.conf.urls.static import static
 
 from django.conf import settings
@@ -25,25 +25,32 @@ from django.conf import settings
 urlpatterns = [
 
     #Students urls
-    url(r'^$', students.students_list, name='home'),
     url(r'^students/add/$', students.students_add, name='students_add'),
     url(r'^students/(?P<sid>\d+)/edit/$', students.students_edit,
 name='students_edit'),
     url(r'^students/(?P<sid>\d+)/delete/$', students.students_delete,
 name='students_delete'),
+    url(r'^$', students.students_list, name='home'),
 
     # Groups urls
-    url(r'^groups/$', groups.groups_list, name='groups'),
     url(r'^groups/add/$', groups.groups_add, name='groups_add'),
     url(r'^groups/(?P<gid>.+)/edit/$', groups.groups_edit,
 name='groups_edit'),
     url(r'^groups/(?P<gid>.+)/delete/$', groups.groups_delete,
 name='groups_delete'),
+    url(r'^groups/$', groups.groups_list, name='groups'),
 
     # Visits urls
     url(r'^journal/$', journals.journal_main_view, name='journal'),
 
+    # Admin url
     url(r'^admin/', admin.site.urls),
+
+    #exams urls
+    url(r'^exam/add/$', exams.exam_add, name='exam_add'),
+    url(r'^exam/(?P<rit>.+)/edit/$', exams.exam_edit, name='exam_edit'),
+    url(r'^exam/(?P<rit>.+)/delete/$', exams.exam_delete, name='exam_delete'),
+    url(r'exam/', exams.exam_list, name='exam'),
 ]
 
 if settings.DEBUG:
