@@ -13,7 +13,7 @@ def groups_list(request):
     order_by = request.GET.get('order_by', '')
     if order_by in ('title', 'leader'):
         group_list = group_list.order_by(order_by)
-        if request.GET.get('reverse', '') == 1:
+        if request.GET.get('reverse', '') == '1':
             group_list = group_list.reverse()
 
     # paginate students_list

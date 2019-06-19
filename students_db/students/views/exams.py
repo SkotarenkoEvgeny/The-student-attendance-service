@@ -12,12 +12,11 @@ def exam_list(request):
     order_by = request.GET.get('order_by', '')
     if order_by in ('subjekt_name', 'date_time', 'teacher_name', 'title'):
         exams = exams.order_by(order_by)
-        if request.GET.get('reverse', '') == 1:
+        if request.GET.get('reverse', '') == '1':
             exams = exams.reverse()
-
     #paginate exam_list
 
-    paginator = Paginator(exams, 1)
+    paginator = Paginator(exams, 2)
     page = request.GET.get('page')
     try:
         exams = paginator.page(page)

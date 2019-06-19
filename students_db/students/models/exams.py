@@ -7,6 +7,7 @@ class Exams(models.Model):
     class Meta(object):
         verbose_name = u"Іспит"
         verbose_name_plural = u"Іспити"
+        ordering = ['subjekt_name']
 
     subjekt_name = models.CharField(
         max_length=256,
