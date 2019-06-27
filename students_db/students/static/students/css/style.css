@@ -1,9 +1,12 @@
 .bord {
     border: 5px;
 }
+
 .img-circle {
     width: 30px
 }
+
+
 h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
  }
@@ -11,6 +14,7 @@ h1, h2, h3, h4, h5, h6 {
 #group-selector {
     margin-top: 30px;
 }
+
 #group-selector select {
     margin: 0;
     width: 85%;
@@ -67,3 +71,4 @@ h1, h2, h3, h4, h5, h6 {
 .pagination {
     display: inline-block;
 }
+
