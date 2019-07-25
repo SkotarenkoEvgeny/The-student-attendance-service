@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="ru">
 
@@ -49,9 +48,12 @@
         <div class="bord col-lg-12">
             <ul class="nav nav-tabs">
                 <li role="presentation" {% if request.path == '/' %} class="active" {% endif %}><a href="{% url 'home' %}">Студенти</a></li>
-                <li role="presentation" {% if request.path == '/journal/' %} class="active" {% endif %}><a href="{% url 'journal' %}">Відвідування</a></li>
-                <li role="presentation" {% if request.path == '/groups/' %} class="active" {% endif %}><a href="{% url 'groups' %}">Групи</a></li>
-                <li role="presentation" {% if request.path == '/exam/' %} class="active" {% endif %}><a href="{% url 'exam' %}">Розклад іспитів</a></li>
+                <li role="presentation" {% if request.path == '/journal/' %} class="active" {% endif %}><a
+                    href="{% url 'journal' %}">Відвідування</a></li>
+                <li role="presentation" {% if request.path == '/groups/' %} class="active" {% endif %}><a
+                    href="{% url 'groups' %}">Групи</a></li>
+                <li role="presentation" {% if request.path == '/exam/' %} class="active" {% endif %}><a
+                    href="{% url 'exam' %}">Розклад іспитів</a></li>
             </ul>
         </div>
     </div>
@@ -62,7 +64,13 @@
             <!-- Status message -->
             {% block status_message %}
             {% if request.GET.status_message %}
-            <div class="alert alert-warning">{{ request.GET.status_message }}</div>
+            <div class="alert alert-warning">{{ request.GET.status_message }}
+            </div>
+            {% endif %}
+            {% if errors %}
+            <div class="alert alert-warning" role="alert">
+                Будьласка, виправте помилки
+            </div>
             {% endif %}
             {% endblock %}
 
@@ -73,7 +81,7 @@
             <!--End Block -->
         </div>
     </div>
-    <br />
+    <br/>
     <!-- End Main Page Content -->
     <div class="clear"></div>
     <!-- Start Footer -->

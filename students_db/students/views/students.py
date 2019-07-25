@@ -62,8 +62,8 @@ def students_add(request):
             if not last_name:
                 errors['birthday'] = u"Дата народження є обов'язковим"
             else:
-                dt_obj = datetime.strptime(birthday, '%Y-%m-%d')
                 try:
+                    dt_obj = datetime.strptime(birthday, '%Y-%m-%d')
                     datetime.strftime(dt_obj, '%Y-%m-%d')
                 except Exception:
                     errors['birthday'] = u"Введіть коректний формат дати д-м-р"
