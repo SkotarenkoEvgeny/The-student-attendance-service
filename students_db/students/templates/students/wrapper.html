@@ -60,8 +60,14 @@
     <div class="row" id="content-columns">
         <div class="bord col-lg-12" id="content-column">
             <!-- Status message -->
-            <div class="alert alert-warning">Зміни скасовано.</div>
+            {% block status_message %}
+            {% if request.GET.status_message %}
+            <div class="alert alert-warning">{{ request.GET.status_message }}</div>
+            {% endif %}
+            {% endblock %}
+
             <!-- Block -->
+            <h2>{% block title %}{% endblock title %}</h2>
             {% block content %}
             {% endblock %}
             <!--End Block -->
