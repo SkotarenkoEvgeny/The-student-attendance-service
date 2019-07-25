@@ -3,8 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from datetime import datetime
+
 from students.models.student import Student
 from students.models.group import Group
+
 
 # Views for Students
 
@@ -36,7 +39,6 @@ def students_list(request):
 
 
 def students_add(request):
-
     if request.method == 'POST':
         if request.POST.get('add_button') is not None:
             errors = {}
@@ -60,10 +62,16 @@ def students_add(request):
             if not last_name:
                 errors['birthday'] = u"Дата народження є обов'язковим"
             else:
-                data['birthday'] = birthday
+                dt_obj = datetime.strptime(birthday, '%Y-%m-%d')
+                try:
+                    datetime.strftime(dt_obj, '%Y-%m-%d')
+                except Exception:
+                    errors['birthday'] = u"Введіть коректний формат дати д-м-р"
+                else:
+                    data['birthday'] = birthday
 
             ticket = request.POST.get('ticket', '').strip()
-            if not last_name:
+            if not ticket:
                 errors['ticket'] = u"Білет є обов'язковим"
             else:
                 data['ticket'] = ticket
@@ -75,21 +83,26 @@ def students_add(request):
             if not student_group:
                 errors['student_group'] = u"Оберіть групу"
             else:
-                data['student_group'] = Group.objects.get(pk=student_group)
-
-            print(errors)
+                groups = Group.objects.filter(id=student_group)
+                if len(groups) != 1:
+                    errors['student_group'] = u"оберіть корректну групу"
+                else:
+                    data['student_group'] = groups[0]
             if not errors:
                 student = Student(**data)
                 student.save()
-
+                # redirect to students list
                 return HttpResponseRedirect(reverse('home'))
             else:
+                # render form with errors and previous user input
                 return render(request, 'students/student_form.html',
-                              {'groups': Group.objects.all().order_by('title'), 'errors': errors})
-
+                              {'groups': Group.objects.all().order_by('title'),
+                               'errors': errors})
+        # redirect to home page on cancel button
         elif request.POST.get('cancel_button') is not None:
             return HttpResponseRedirect(reverse('home'))
     else:
+        # initial form render
         return render(request, 'students/student_form.html',
                       {'groups': Group.objects.all().order_by('title')})
 
