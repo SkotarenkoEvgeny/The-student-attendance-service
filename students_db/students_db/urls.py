@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from students.views import students, groups, journals, exams
+from students.views import students, groups, journals, exams, contact_admin
 from django.conf.urls.static import static
 
 from django.conf import settings
@@ -45,6 +45,7 @@ name='groups_delete'),
 
     # Admin url
     url(r'^admin/', admin.site.urls),
+    url(r'^contact-admin/$', contact_admin.ContactForm.contact_admin, name='contact_admin'),
 
     #exams urls
     url(r'^exam/add/$', exams.exam_add, name='exam_add'),

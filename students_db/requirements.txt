@@ -2,3 +2,4 @@ Django==1.11.7
 Pillow==6.0.0
 pytz==2018.9
 psycopg2
+django-crispy-forms==1.7.2
