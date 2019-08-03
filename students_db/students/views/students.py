@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.forms import ModelForm
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 
 from datetime import datetime
 
@@ -25,6 +25,7 @@ class StudentUpdateForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(StudentUpdateForm, self).__init__(*args, **kwargs)
+
         self.helper = FormHelper(self)
         # set form tag attributes
         self.helper.form_action = reverse('students_edit',
@@ -47,6 +48,7 @@ class StudentUpdateView(UpdateView):
     model = Student
     template_name = 'students/students_edit.html'
     form_class = StudentUpdateForm
+    pk_url_kwarg = 'sid'
 
     def get_success_url(self):
         return u'%s?status_message=Студента успішно збережено!' % reverse(
@@ -59,6 +61,13 @@ class StudentUpdateView(UpdateView):
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 
+class StudentDeleteView(DeleteView):
+    model = Student
+    pk_url_kwarg = 'sid'
+    template_name = 'students/students_delete.html'
+
+    def get_success_url(self):
+        return u'%s?status_message=Студента успішно видалено!'%reverse('home')
 
 def students_list(request):
     students = Student.objects.all()
