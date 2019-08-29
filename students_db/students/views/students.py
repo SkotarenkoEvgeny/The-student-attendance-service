@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelChoiceField
 from django.views.generic import UpdateView, DeleteView
 
 from datetime import datetime
@@ -19,9 +19,11 @@ from students.models.group import Group
 # Views for Students
 
 class StudentUpdateForm(ModelForm):
+
     class Meta:
         model = Student
         fields = '__all__'
+        # widgets = {'student_group': "11"}
 
     def __init__(self, *args, **kwargs):
         super(StudentUpdateForm, self).__init__(*args, **kwargs)
@@ -168,11 +170,3 @@ def students_add(request):
         # initial form render
         return render(request, 'students/student_form.html',
                       {'groups': Group.objects.all().order_by('title')})
-
-
-def students_edit(request, sid):
-    return HttpResponse('<h1>Edit Student %s</h1>' % sid)
-
-
-def students_delete(request, sid):
-    return HttpResponse('<h1>Delete Student %s</h1>' % sid)

@@ -33,7 +33,7 @@ name='students_delete'),
     url(r'^$', students.students_list, name='home'),
 
     # Groups urls
-    url(r'^groups/add/$', groups.groups_add, name='groups_add'),
+    url(r'^groups/add/$', groups.GroupCreateView.as_view(), name='groups_add'),
     url(r'^groups/(?P<gid>.+)/edit/$', groups.groups_edit,
 name='groups_edit'),
     url(r'^groups/(?P<gid>.+)/delete/$', groups.groups_delete,
@@ -53,6 +53,7 @@ name='groups_delete'),
     url(r'^exam/(?P<rit>.+)/delete/$', exams.exam_delete, name='exam_delete'),
     url(r'exam/', exams.exam_list, name='exam'),
 ]
+              # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     # serve files from media folder

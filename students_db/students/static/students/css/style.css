@@ -1,6 +1,12 @@
+/* Used file */
+
 html {
     position: relative;
     min-height: 100%;
+}
+
+@media {
+    float: none;
 }
 
 body {
@@ -86,4 +92,3 @@ textarea, select, input {
 .pagination {
     display: inline-block;
 }
-
