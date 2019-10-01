@@ -23,7 +23,6 @@ class StudentUpdateForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
-        # widgets = {'student_group': "11"}
 
     def __init__(self, *args, **kwargs):
         super(StudentUpdateForm, self).__init__(*args, **kwargs)

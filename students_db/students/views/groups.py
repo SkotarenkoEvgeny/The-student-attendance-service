@@ -1,17 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 
 from django.views.generic import UpdateView, DeleteView, CreateView
 
+from django.forms.models import ModelForm
 
 from students.models.group import Group
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+
 
 # Views for Group
 
 def groups_list(request):
-
     group_list = Group.objects.all()
 
     order_by = request.GET.get('order_by', '')
@@ -36,21 +40,51 @@ def groups_list(request):
 
     return render(request, 'students/groups.html', {'groups': group_list})
 
+# The part of create group
+class GroupForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(GroupForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        # add buttons
+        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('reset', 'Reset'))
+        self.helper.add_input(
+            Submit('cancel', 'Cancel', css_class='btn-danger'))
+
+
 class GroupCreateView(CreateView):
     model = Group
+    form_class = GroupForm
     template_name = 'students/groups_create.html'
-    fields = ('title', 'leader', 'notes')
 
     def get_success_url(self):
         return u'%s?status_message=Групу успішно збережено!' % reverse(
             'home')
 
     def post(self, request, *args, **kwargs):
-        if request.POST.get('reset'):
+        # the Add-group form logic
+        if 'cancel' in request.POST:
             return HttpResponseRedirect(
-                u'%s?status_message=Додавання відмінено!', reverse('home'))
+                u'%s?status_message=Додавання відмінено!' % reverse('groups'))
+        elif 'reset' in request.POST:
+            return HttpResponseRedirect(reverse('groups_add'))
         else:
             return super(GroupCreateView, self).post(request, *args, **kwargs)
+
+#The part of Edit group
+class GroupEditForm(GroupForm):
+
+    def __init__(self, *args, **kwargs):
+        super(GroupEditForm, self).__init__( *args, *kwargs)
+        self.helper.form_action = reverse('groups_add', kwargs={'gid':kwargs['instance'].id})
+
+class GroupEditView(CreateView):
+    pass
 
 
 def groups_add(requests):
@@ -63,6 +97,7 @@ def groups_edit(request, gid):
 
 def groups_delete(request, gid):
     return HttpResponse('<h1>Delete Student %s</h1>' % gid)
+
 
 # Views for Journal
 

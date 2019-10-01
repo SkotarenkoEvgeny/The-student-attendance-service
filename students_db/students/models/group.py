@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Group(models.Model):
@@ -7,7 +8,7 @@ class Group(models.Model):
     class Meta(object):
         verbose_name = u"Група"
         verbose_name_plural = u"Групи"
-        ordering =['title']
+        ordering = ['title']
 
     title = models.CharField(
         max_length=256,
@@ -31,6 +32,15 @@ class Group(models.Model):
     def __str__(self):
         if self.leader:
             return u"%s(%s, %s)" % (
-            self.title, self.leader.first_name, self.leader.last_name)
+                self.title, self.leader.first_name, self.leader.last_name)
         else:
             return u"%s" % (self.title)
+
+    def clean(self):
+        """Validation for group"""
+
+        if len(Group.objects.filter(title=self.title)) > 0:
+            raise ValidationError({'title': ('group exists')})
+
+        if self.leader == None:
+            raise ValidationError({'leader': ('input the group leader')})
