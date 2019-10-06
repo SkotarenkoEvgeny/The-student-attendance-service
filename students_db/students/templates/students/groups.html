@@ -11,7 +11,7 @@
     <tr>
         <th><a href="#">№</a></th>
         <th>
-            <a href="{% url 'groups' %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            <a href="u'{% url 'groups' %}?order_by=title{% if order_by == 'title' and reverse != '1' %}&amp;reverse=1{% endif %}">
                 Група
                 {% if order_by == 'title' and reverse != '1' %}&uarr;
                 {% elif order_by == 'title' and reverse == '1' %}&darr;
@@ -35,9 +35,9 @@
     {% for group in groups %}
     <tr>
         <td>{{ forloop.counter0|add:groups.start_index }}</td>
-        <td><a href="{% url 'groups_edit' group.title %}">{{ group.title }}</a>
+        <td><a href="{% url 'groups_edit' group.id %}">{{ group.title }}</a>
         </td>
-        <td><a title="Редагувати" href="{% url 'groups_edit' group.title %}">
+        <td><a title="Редагувати" href="{% url 'groups_edit' group.id %}">
             {{ group.leader }}</a></td>
         <td>
             <div class="dropdown">
@@ -47,11 +47,11 @@
                 <ul class="dropdown-menu" role="menu">
                     <li role="presentation">
                         <a role="menuitem" tabindex="-1"
-                           href="{% url 'groups_edit' group.title %}">Редагувати</a>
+                           href="{% url 'groups_edit' group.id %}">Редагувати</a>
                     </li>
                     <li role="presentation">
                         <a role="menuitem" tabindex="-1"
-                           href="{% url 'groups_delete' group.title %}">Видалити</a>
+                           href="{% url 'groups_delete' group.id %}">Видалити</a>
                     </li>
                 </ul>
             </div>

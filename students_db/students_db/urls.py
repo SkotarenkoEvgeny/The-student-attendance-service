@@ -21,23 +21,24 @@ from django.conf.urls.static import static
 
 from django.conf import settings
 
-
 urlpatterns = [
 
-    #Students urls
+    # Students urls
     url(r'^students/add/$', students.students_add, name='students_add'),
     url(r'^students/(?P<sid>\d+)/edit/$', students.StudentUpdateView.as_view(),
-name='students_edit'),
-    url(r'^students/(?P<sid>\d+)/delete/$', students.StudentDeleteView.as_view(),
-name='students_delete'),
+        name='students_edit'),
+    url(r'^students/(?P<sid>\d+)/delete/$',
+        students.StudentDeleteView.as_view(),
+        name='students_delete'),
     url(r'^$', students.students_list, name='home'),
 
     # Groups urls
     url(r'^groups/add/$', groups.GroupCreateView.as_view(), name='groups_add'),
-    url(r'^groups/(?P<gid>.+)/edit/$', groups.groups_edit,
-name='groups_edit'),
-    url(r'^groups/(?P<gid>.+)/delete/$', groups.groups_delete,
-name='groups_delete'),
+    url(r'^groups/(?P<gid>.+)/edit/$', groups.GroupEditView.as_view(),
+        # groups.groups_edit,
+        name='groups_edit'),
+    url(r'^groups/(?P<gid>.+)/delete/$', groups.GroupDeleteView.as_view(),
+        name='groups_delete'),
     url(r'^groups/$', groups.groups_list, name='groups'),
 
     # Visits urls
@@ -45,15 +46,16 @@ name='groups_delete'),
 
     # Admin url
     url(r'^admin/', admin.site.urls),
-    url(r'^contact-admin/$', contact_admin.ContactForm.contact_admin, name='contact_admin'),
+    url(r'^contact-admin/$', contact_admin.ContactForm.contact_admin,
+        name='contact_admin'),
 
-    #exams urls
+    # exams urls
     url(r'^exam/add/$', exams.exam_add, name='exam_add'),
     url(r'^exam/(?P<rit>.+)/edit/$', exams.exam_edit, name='exam_edit'),
     url(r'^exam/(?P<rit>.+)/delete/$', exams.exam_delete, name='exam_delete'),
     url(r'exam/', exams.exam_list, name='exam'),
 ]
-              # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     # serve files from media folder

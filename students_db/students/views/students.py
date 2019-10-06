@@ -19,7 +19,6 @@ from students.models.group import Group
 # Views for Students
 
 class StudentUpdateForm(ModelForm):
-
     class Meta:
         model = Student
         fields = '__all__'
@@ -62,13 +61,15 @@ class StudentUpdateView(UpdateView):
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 
+
 class StudentDeleteView(DeleteView):
     model = Student
     pk_url_kwarg = 'sid'
     template_name = 'students/students_delete.html'
 
     def get_success_url(self):
-        return u'%s?status_message=Студента успішно видалено!'%reverse('home')
+        return u'%s?status_message=Студента успішно видалено!' % reverse('home')
+
 
 def students_list(request):
     students = Student.objects.all()

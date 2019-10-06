@@ -40,7 +40,9 @@ def groups_list(request):
 
     return render(request, 'students/groups.html', {'groups': group_list})
 
+
 # The part of create group
+
 class GroupForm(ModelForm):
     class Meta:
         model = Group
@@ -76,27 +78,57 @@ class GroupCreateView(CreateView):
         else:
             return super(GroupCreateView, self).post(request, *args, **kwargs)
 
-#The part of Edit group
-class GroupEditForm(GroupForm):
+
+# The part of Edit group
+
+class GroupEditForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(GroupEditForm, self).__init__( *args, *kwargs)
-        self.helper.form_action = reverse('groups_add', kwargs={'gid':kwargs['instance'].id})
-
-class GroupEditView(CreateView):
-    pass
-
-
-def groups_add(requests):
-    return HttpResponse('<h1>Groups add Form</h1>')
-
-
-def groups_edit(request, gid):
-    return HttpResponse('<h1>Edit Group %s</h1>' % gid)
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_action = reverse('groups_edit', kwargs={
+            'gid': kwargs['instance'].id})
+        self.helper.form_method = 'POST'
+        # add buttons
+        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit('reset', 'Reset'))
+        self.helper.add_input(
+            Submit('cancel', 'Cancel', css_class='btn-danger'))
 
 
-def groups_delete(request, gid):
-    return HttpResponse('<h1>Delete Student %s</h1>' % gid)
+class GroupEditView(UpdateView):
+    model = Group
+    form_class = GroupEditForm
+    template_name = 'students/groups_create.html'
+    pk_url_kwarg = 'gid'
+
+    def get_success_url(self):
+        return u'%s?status_message=Групу успішно збережено!' % reverse(
+            'home')
+
+    def post(self, request, *args, **kwargs):
+        # the Edit-group form logic
+        if 'cancel' in request.POST:
+            return HttpResponseRedirect(
+                u'%s?status_message=Редагування відмінено!' % reverse('groups'))
+        elif 'reset' in request.POST:
+            return HttpResponseRedirect(reverse('groups_add'))
+        else:
+            return super(GroupEditView, self).post(request, *args, **kwargs)
+
+
+# The part for delete group
+
+class GroupDeleteView(DeleteView):
+    model = Group
+    template_name = 'students/groups_delete.html'
+    pk_url_kwarg = 'gid'
+
+    def get_success_url(self):
+        return u'%s?status_message=Групу успішно видалено!' % reverse('home')
 
 
 # Views for Journal

@@ -13,7 +13,8 @@ class Group(models.Model):
     title = models.CharField(
         max_length=256,
         blank=False,
-        verbose_name=u"Група"
+        verbose_name=u"Група",
+        unique=True
     )
 
     leader = models.OneToOneField(
@@ -39,8 +40,8 @@ class Group(models.Model):
     def clean(self):
         """Validation for group"""
 
-        if len(Group.objects.filter(title=self.title)) > 0:
-            raise ValidationError({'title': ('group exists')})
+        # if len(Group.objects.filter(title=self.title)) > 0:
+        #     raise ValidationError({'title': ('group exists')})
 
         if self.leader == None:
             raise ValidationError({'leader': ('input the group leader')})
