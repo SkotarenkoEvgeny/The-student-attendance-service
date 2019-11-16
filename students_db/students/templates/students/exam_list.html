@@ -54,20 +54,20 @@
     <tr>
         <td>{{ forloop.counter0|add:exams.start_index }}</td>
         <td>
-            <a href="{% url 'exam_edit' exam.subjekt_name %}">{{ exam.subjekt_name }}</a>
+            <a href="{% url 'exam_edit' exam.id %}">{{ exam.subjekt_name }}</a>
         </td>
         <td><a title="Редагувати"
-               href="{% url 'exam_edit' exam.subjekt_name %}">
+               href="{% url 'exam_edit' exam.id %}">
             {{ exam.date_time }}
             </a>
         </td>
         <td><a title="Редагувати"
-               href="{% url 'exam_edit' exam.subjekt_name %}">
+               href="{% url 'exam_edit' exam.id %}">
             {{ exam.teacher_name }}
             </a>
         </td>
         <td><a title="Редагувати"
-               href="{% url 'groups_edit' exam.title %}">
+               href="{% url 'groups_edit' exam.id %}">
             {{ exam.title }}
             </a>
         </td>
@@ -80,11 +80,11 @@
                 <ul class="dropdown-menu" role="menu">
                     <li role="presentation">
                         <a role="menuitem" tabindex="-1"
-                           href="{% url 'exam_edit' exam.subjekt_name %}">Редагувати</a>
+                           href="{% url 'exam_edit' exam.id %}">Редагувати</a>
                     </li>
                     <li role="presentation">
                         <a role="menuitem" tabindex="-1"
-                           href="{% url 'exam_delete' exam.subjekt_name %}">Видалити</a>
+                           href="{% url 'exam_delete' exam.id %}">Видалити</a>
                     </li>
                 </ul>
             </div>

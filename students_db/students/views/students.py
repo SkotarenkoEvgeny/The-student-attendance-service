@@ -24,7 +24,7 @@ class StudentUpdateForm(ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(StudentUpdateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
         # set form tag attributes
@@ -55,9 +55,9 @@ class StudentUpdateView(UpdateView):
             'home')
 
     def post(self, request, *args, **kwargs):
-        if request.POST.get('cancel_button'):
+        if 'cancel_button' in request.POST:
             return HttpResponseRedirect(
-                u'%s?status_message=Редагування відмінено!', reverse('home'))
+                u'%s?status_message=Редагування відмінено!' % reverse('home'))
         else:
             return super(StudentUpdateView, self).post(request, *args, **kwargs)
 

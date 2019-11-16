@@ -50,8 +50,8 @@ urlpatterns = [
         name='contact_admin'),
 
     # exams urls
-    url(r'^exam/add/$', exams.exam_add, name='exam_add'),
-    url(r'^exam/(?P<rit>.+)/edit/$', exams.exam_edit, name='exam_edit'),
+    url(r'^exam/add/$', exams.ExamCreateView.as_view(), name='exam_add'),
+    url(r'^exam/(?P<rit>.+)/edit/$', exams.ExamEditView.as_view(), name='exam_edit'),
     url(r'^exam/(?P<rit>.+)/delete/$', exams.exam_delete, name='exam_delete'),
     url(r'exam/', exams.exam_list, name='exam'),
 ]
